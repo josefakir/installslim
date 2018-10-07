@@ -1,6 +1,6 @@
 composer.phar require slim/slim "^3.0"
 composer.phar require illuminate/database "~5.2"
-echo "RewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule ^index.php [QSA,L]" > .htaccess
+echo "RewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule ^ index.php [QSA,L]" > .htaccess
 echo '<?php
 	require "vendor/autoload.php";
 	include "bootstrap.php";
@@ -9,7 +9,7 @@ echo '<?php
 	use Mainclass\Middleware\Logging as Logging;
 	$app = new \Slim\App();
 	$app->add(new Logging());
-	$app->get("/",function($request, $response, $argas){
+	$app->get("/",function($request, $response, $args){
 		return $response->write("hello");
 		$usuario = new Usuario();
 		$usuarios = $usuario->all();
