@@ -16,8 +16,7 @@ echo '<?php
 		return $response->withStatus(200)->withJson($usuarios);
 	});
 	$app->run();' > index.php
-echo '
-<?php
+echo '<?php
 	include "config/credentials.php";
 	include "vendor/autoload.php";
 	use Illuminate\Database\Capsule\Manager as Capsule;
@@ -33,7 +32,6 @@ echo '
 		"collation" => "utf8_general_ci",
 		"prefix"    => ""
 	]);
-
 	$capsule->bootEloquent();' > bootstrap.php
 mkdir config
 cd config
@@ -57,8 +55,7 @@ echo '<?php
 			$response = $next($request, $response);
 			return $response;
 		}
-	}
-' > Logging.php
+	}' > Logging.php
 cd ..
 mkdir Models
 cd Models
@@ -66,8 +63,7 @@ echo '<?php
 	namespace Mainclass\Models;
 	class Usuario extends \Illuminate\Database\Eloquent\Model{
 
-	}
-'> Usuario.php
+	}'> Usuario.php
 cd ../../../
 echo '{
     "require": {
