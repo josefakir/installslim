@@ -1,5 +1,5 @@
-composer require slim/slim "^3.0"
-composer require illuminate/database "~5.2"
+composer.phar require slim/slim "^3.0"
+composer.phar require illuminate/database "~5.2"
 echo "RewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule ^ index.php [QSA,L]" > .htaccess
 echo '<?php
 	require "vendor/autoload.php";
@@ -75,4 +75,4 @@ echo '{
     }
 }
 ' > composer.json
-composer update
+composer.phar update
