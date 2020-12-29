@@ -1,28 +1,21 @@
-composer.phar require slim/slim "^4.7"
-composer.phar require illuminate/database "^8.20"
-composer.phar require slim/psr7 "^1.3"
+composer.phar require slim/slim "^3.0"
+composer.phar require illuminate/database "~5.2"
 echo "RewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule ^ index.php [QSA,L]" > .htaccess
 echo '<?php
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
-require "vendor/autoload.php";
-require "bootstrap.php";
+	require "vendor/autoload.php";
+	include "bootstrap.php";
 
-use Mainclass\Models\Usuario;
+	use Mainclass\Models\Usuario;
 	use Mainclass\Middleware\Logging as Logging;
-
-
-$app = AppFactory::create();
-//$app->setBasePath("/mw"); //si se está usando en un subdir
-$app->addErrorMiddleware(true, false, false);
-$app->get("/", function (Request $request, Response $response, array $args) {
-    $response->getBody()->write("Hello World");
-    $usuario = new Usuario();
-    $usuarios = $usuario->all();
-    return $response;
-});
-$app->run();'> index.php
+	$app = new \Slim\App();
+	$app->add(new Logging());
+	$app->get("/",function($request, $response, $args){
+		return $response->write("hello");
+		$usuario = new Usuario();
+		$usuarios = $usuario->all();
+		return $response->withStatus(200)->withJson($usuarios);
+	});
+	$app->run();' > index.php
 echo '<?php
 	include "config/credentials.php";
 	include "vendor/autoload.php";
@@ -44,7 +37,7 @@ mkdir config
 cd config
 echo '<?php
 		$db_host = "127.0.0.1";
-		$db_name = "middleware";
+		$db_name = "intranet";
 		$db_user = "root";
 		$db_pass = "root";' > credentials.php
 cd ..
@@ -74,12 +67,11 @@ echo '<?php
 cd ../../../
 echo '{
     "require": {
-        "slim/slim": "^4.7",
-        "illuminate/database": "^8.20",
-		"slim/psr7": "^1.3"
+        "slim/slim": "^3.0",
+        "illuminate/database": "~5.2"
     },
     "autoload" : {
-		"psr-4" : {"Mainclass\\\" : "src/Mainclass/"}
+    	"psr-4" : {"Mainclass\\\" : "src/Mainclass/"}
     }
 }
 ' > composer.json
